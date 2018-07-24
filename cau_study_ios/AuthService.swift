@@ -26,19 +26,27 @@ class AuthService {
                 onError(error!.localizedDescription)
                 return
             }
-            let uid = user?.uid
+            //firebase 5....HJ
+            let uid = user?.user.uid
             let storageRef = Storage.storage().reference(forURL: Config.STORAGE_ROOF_REF).child("profile_image").child(uid!)
-            
             storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
                 if error != nil {
+                    print("Couldn't Upload Image")
                     return
+                } else {
+                    print("Uploaded")
+                    storageRef.downloadURL(completion: { (url, error) in
+                        if error != nil {
+                            print(error!)
+                            return
+                        }
+                        if url != nil {
+                            self.setUserInfomation(profileImageUrl: url!.absoluteString, username: username, email: email, uid: uid!, onSuccess: onSuccess)
+                        }
+                    } )
                 }
-                let profileImageUrl = metadata?.downloadURL()?.absoluteString
-                
-                self.setUserInfomation(profileImageUrl: profileImageUrl!, username: username, email: email, uid: uid!, onSuccess: onSuccess)
             })
         })
-        
     }
     
 

@@ -218,8 +218,6 @@ class ProfileViewController: UIViewController {
         let signInVC = storyboard.instantiateViewController(withIdentifier: "SignInViewController")
         self.present(signInVC, animated: true, completion: nil)
     }
-    
-    
 }
 
     extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -232,7 +230,7 @@ class ProfileViewController: UIViewController {
             }
             dismiss(animated: true, completion: nil)
             profileImageChange()
-            print("profileImage",user.profileImageUrl)
+            //print("profileImage",user.profileImageUrl)
             
         }
     }
